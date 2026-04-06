@@ -1,0 +1,113 @@
+import fs;
+import str;
+import process;
+import env;
+
+# geters
+fn get_logo(os_name: string) string {
+    return fs.read_file($"assets/{os_name}.txt")
+        ~> to_str();
+}
+
+fn get_os() string {
+    const BRUTE = process.exec("cat /etc/os-release") ~> str.trim();
+
+    const BRUTE_LINE = (BRUTE ~> str.split("\n"))[0];
+    return (BRUTE_LINE ~> str.split("="))[1] ~> str.replace("\"", "");
+}
+
+fn get_kernel_version() string {
+    return process.exec("uname -r") ~> str.trim();
+}
+fn get_cpu() string {
+    const BRUTE = process.exec("cat /proc/cpuinfo") ~>  str.trim();
+    const BRUTE_LINE = ((BRUTE ~> str.split("\n"))[4] ~> str.split(":"))[1];
+
+    return BRUTE_LINE ~> str.trim();
+}
+
+fn get_ram() arr<string> {
+    const BRUTE = process.exec("cat /proc/meminfo") ~> str.trim();
+    const BRUTE_LINES = BRUTE ~> str.split("\n");
+
+    const LINE_TOTAL = (((BRUTE_LINES[0] ~> str.split(":"))[1]) ~> str.trim() ~> str.split(" "))[0];
+    const LINE_FREE = (((BRUTE_LINES[2] ~> str.split(":"))[1]) ~> str.trim() ~> str.split(" "))[0];
+    
+    var r = str_array();
+    push(r, LINE_TOTAL);
+    push(r, LINE_FREE);
+    
+    return r;
+}
+
+fn get_shell() string {
+    const PARTS = env.get("SHELL") ~> str.split("/");
+    return PARTS[len(PARTS) - 1] ~> str.trim();
+}
+
+fn get_uptime() string {
+    return "";
+}
+fn get_terminal() string {
+    return "";
+}
+
+#utils
+fn lower(s: string) string {
+    var new_str_temp = str_array();
+
+    const LITTE_ONES = {
+        "A": "a", "B": "b", "C": "c", "D": "d", "E": "e",
+        "F": "f", "G": "g", "H": "h", "I": "i", "J": "j",
+        "K": "k", "L": "l", "M": "m", "N": "n", "O": "o",
+        "P": "p", "Q": "q", "R": "r", "S": "s", "T": "t",
+        "U": "u", "V": "v", "W": "w", "X": "x", "Y": "y", "Z": "z"
+    };
+
+    for c in s ~> chars() {
+        const c_n = to_str(LITTE_ONES[c] ~> fallback(c));
+        push(new_str_temp, c_n);
+    }
+
+    return new_str_temp ~> str.join("");
+}
+
+# main
+fn main() void {
+    # OS
+    const OS_FULL_NAME = get_os();
+    const OS_NAME_NORMALIZED = (OS_FULL_NAME ~> str.split(" "))[0] ~> lower();
+    
+    # KERNEL
+    const K_VERSION = get_kernel_version();
+
+    #CPU
+    const CPU_MODEL = get_cpu();
+
+    # RAM
+    const DATA_OF_RAM: arr<string> = get_ram();
+
+    const TOTAL_RAM = DATA_OF_RAM[0] ~> to_int();
+    const FREE_RAM  = TOTAL_RAM - (DATA_OF_RAM[1] ~> to_int());
+
+    # get_logo(OS_NAME_NORMALIZED) ~> print();
+
+    print($"OS: {OS_FULL_NAME}");
+    print($"KERNEL: {K_VERSION}");
+    print($"CPU: {CPU_MODEL}");
+    print($"RAM: {FREE_RAM / 1024 / 1024}GB / {TOTAL_RAM / 1024 / 1024}GB");
+    print($"Shell: {get_shell()}");
+
+    # print($"Uptime: {OS_FULL_NAME}");
+    # print($"Terminal: {OS_FULL_NAME}");
+}
+
+main();
+
+# Debian 12
+# Kernel: 6.1
+# CPU: Intel i5-2500
+# RAM: 3.2GB / 8GB
+# Shell: bash
+# Uptime: 2h 13m
+# Terminal: xfce4-terminal
