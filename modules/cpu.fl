@@ -1,0 +1,13 @@
+import str;
+import fs;
+
+fn get_cpu() string { 
+    const content = fs.read_file("/proc/cpuinfo") ~> if_fail("Não foi possível ler /proc/cpuinfo") ~> to_str(); 
+    for line in content ~> lines() ~> grep("model name") { 
+        const parts = line ~> str.split(":"); 
+        if len(parts) > 1 { 
+            return parts[1] ~> str.trim(); 
+        } 
+    } 
+    return "N/A";
+}

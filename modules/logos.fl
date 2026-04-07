@@ -1,0 +1,5 @@
+import fs;
+
+fn get_logo(os_name: string) string { 
+    return fs.read_file($"assets/{os_name}.txt") ~> to_str();
+}

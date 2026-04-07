@@ -1,0 +1,10 @@
+import fs;
+import str;
+
+fn get_uptime() string { 
+    const content = fs.read_file("/proc/uptime") ~> if_fail("0") ~> to_str();
+    const seconds_total = (content ~> str.split(" "))[0] ~> to_int();
+    const hours = seconds_total / 3600;
+    const minutes = (seconds_total % 3600) / 60;
+    return $"{hours}h {minutes}m";
+}

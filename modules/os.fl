@@ -1,0 +1,15 @@
+import str;
+import fs;
+
+fn get_os() string { 
+    const content = fs.read_file("/etc/os-release") ~> if_fail("Não foi possível ler /etc/os-release"); 
+    const lines_r = content ~> to_str() ~> str.split("\n"); 
+
+    if (len(lines_r) > 0) { 
+        const parts = lines_r[0] ~> str.split("="); 
+        if (len(parts) > 1) { 
+            return parts[1] ~> str.replace("\"", ""); 
+        } 
+    } 
+    return "Unknown OS";
+}

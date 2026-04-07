@@ -1,0 +1,7 @@
+import str;
+import env;
+
+fn get_shell() string { 
+    const parts = env.get("SHELL") ~> str.split("/"); 
+    return parts[len(parts) - 1] ~> str.trim();
+}

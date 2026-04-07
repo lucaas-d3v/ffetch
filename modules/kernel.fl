@@ -1,0 +1,6 @@
+import process;
+import str;
+
+fn get_kernel_version() string { 
+    return process.exec("uname -r") ~> str.trim();
+}

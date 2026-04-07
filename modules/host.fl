@@ -1,0 +1,26 @@
+import env;
+import str;
+import fs;
+
+fn get_host_name() string {
+    const user = env.get("USER");
+
+    const hostname_env = env.get("HOSTNAME");
+
+    var hostname = "";
+    
+    if len(hostname_env) > 0 {
+        hostname = hostname_env;
+    } else {
+        hostname = fs.read_file("/etc/hostname")
+            ~> if_fail("Não foi possível ler /etc/hostname") 
+            ~> to_str()
+            ~> str.trim();
+    }
+
+    if len(user) > 0 and len(hostname) > 0 {
+        return $"{user}@{hostname}";
+    }
+
+    return "stranger";
+}

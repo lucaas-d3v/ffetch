@@ -1,0 +1,11 @@
+import env;
+
+fn get_terminal() string { 
+    const term = env.get("TERM");
+
+    if len(term) > 0 {
+        return term;
+    }
+
+    return "unknown-terminal";
+}
