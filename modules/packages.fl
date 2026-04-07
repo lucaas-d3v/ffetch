@@ -1,0 +1,16 @@
+import fs;
+import str;
+
+fn get_packages() string {
+    const dpkg_status = fs.read_file("/var/lib/dpkg/status") 
+        ~> fallback("") 
+        ~> to_str();
+    
+    const count = str.count_matches(dpkg_status, "Status: install ok installed");
+    
+    if count > 0 {
+        return $"{count} (dpkg)";
+    }
+    
+    return "Unknown";
+}

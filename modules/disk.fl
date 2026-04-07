@@ -1,0 +1,16 @@
+import process;
+import str;
+
+fn get_disk_data() arr<string> {
+    const cmd = "df -m / | awk 'NR==2 {print $3 \" \" $2}'";
+    const r = process.exec(cmd) ~> str.trim();
+    
+    if len(r) > 0 {
+        return r ~> str.split(" ");
+    }
+    
+    var fb = str_array();
+    push(fb, "0");
+    push(fb, "0");
+    return fb;
+}

@@ -1,0 +1,13 @@
+import process;
+import str;
+
+fn get_display() string {
+    const cmd = "sh -c 'cat /sys/class/drm/*/modes 2>/dev/null | head -n 1'";
+    const res = process.exec(cmd) ~> str.trim();
+    
+    if len(res) > 0 {
+        return res;
+    }
+    
+    return "Unknown Display";
+}

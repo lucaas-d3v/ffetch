@@ -1,6 +1,9 @@
-import process;
+import fs;
 import str;
 
 fn get_kernel_version() string { 
-    return process.exec("uname -r") ~> str.trim();
+    return fs.read_file("/proc/sys/kernel/osrelease") 
+        ~> fallback("") 
+        ~> to_str() 
+        ~> str.trim();
 }

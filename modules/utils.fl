@@ -1,4 +1,5 @@
 import str;
+import term;
 
 # utils
 fn lower(s: string) string { 
@@ -11,6 +12,23 @@ fn lower(s: string) string {
     return new_str_temp ~> str.join("");
 }
 
+fn index_of(s: string, c: string) int {
+    const s_len = len(s);
+    const c_len = len(c);
+
+    if c_len == 0 or c_len > s_len {
+        return -1;
+    }
+
+    for i in range(0, (s_len - c_len + 1)) {
+        if s[i .. i + c_len] == c {
+            return i;
+        }
+    }
+    
+    return -1;
+}
+
 fn pad_right(s: string, width: int) string {
     const current_len = len(s);
     
@@ -20,4 +38,34 @@ fn pad_right(s: string, width: int) string {
 
     const spaces = " " ~> str.repeat(width - current_len);
     return $"{s}{spaces}";
+}
+
+fn make_bar(used: int, total: int, suffix: string) string {
+    const percent_used = (used * 100.0) / total; 
+    
+    const filled = to_int(percent_used / 10.0);
+    const empty = 10 - filled;
+
+    const f_str = $"{term.BOLD}{term.GREEN}█{term.RESET}" ~> str.repeat(filled);
+    const e_str = "░" ~> str.repeat(empty);
+
+    return $"{f_str}{e_str} {used}{suffix} / {total}{suffix}";
+}
+
+fn clean_tags(s: string) string {
+    return s 
+        ~> str.replace("{DR}", "")
+        ~> str.replace("{R}", "")
+        ~> str.replace("{W}", "")
+        ~> str.replace("{G}", "")
+        ~> str.replace("{0}", "");
+}
+
+fn apply_colors(s: string) string {
+    return s 
+        ~> str.replace("{R}", term.RED)
+        ~> str.replace("{W}", term.WHITE)
+        ~> str.replace("{DR}", term.DARK_RED)
+        ~> str.replace("{G}", term.GREEN)
+        ~> str.replace("{0}", term.RESET);
 }

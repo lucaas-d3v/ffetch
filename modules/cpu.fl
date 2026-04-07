@@ -3,11 +3,20 @@ import fs;
 
 fn get_cpu() string { 
     const content = fs.read_file("/proc/cpuinfo") ~> if_fail("Não foi possível ler /proc/cpuinfo") ~> to_str(); 
-    for line in content ~> lines() ~> grep("model name") { 
-        const parts = line ~> str.split(":"); 
-        if len(parts) > 1 { 
-            return parts[1] ~> str.trim(); 
-        } 
-    } 
+    
+    for line in content ~> lines() ~> grep("model name") {
+        const parts = line ~> str.split(":");
+        
+        if len(parts) > 1 {
+            const clean_name = parts[1] 
+                ~> str.trim()
+                ~> str.replace("(R)", "")
+                ~> str.replace("(TM)", "")
+                ~> str.replace(" CPU", "");
+            
+            return (clean_name ~> str.split("@"))[0] ~> str.trim();
+        }
+    }
+
     return "N/A";
 }

@@ -1,0 +1,15 @@
+import process;
+import str;
+
+fn get_local_ip() string {
+    const raw_ips = process.exec("hostname -I") ~> str.trim();
+    
+    if len(raw_ips) > 0 {
+        const parts = raw_ips ~> str.split(" ");
+        if len(parts) > 0 {
+            return parts[0];
+        }
+    }
+    
+    return "127.0.0.1 (Offline)";
+}

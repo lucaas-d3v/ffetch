@@ -1,0 +1,22 @@
+import env;
+import str;
+
+fn get_de() string {
+    const r = env.get("XDG_CURRENT_DESKTOP");
+
+    if len(r) > 0 {
+        return r;    
+    }
+    
+    return "Unknow";
+}
+
+fn get_wm() string {
+    const r = env.get("XDG_SESSION_DESKTOP");
+
+    if len(r) > 0 {
+        return r;    
+    }
+    
+    return "Unknow";
+}

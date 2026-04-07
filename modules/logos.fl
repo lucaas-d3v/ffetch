@@ -1,5 +1,11 @@
 import fs;
 
 fn get_logo(os_name: string) string { 
+    const logo_share = fs.read_file($"/usr/share/ffetch/assets/{os_name}.txt") ~> to_str();
+
+    if len(logo_share) > 0 {
+        return logo_share;    
+    }
+    
     return fs.read_file($"assets/{os_name}.txt") ~> to_str();
 }

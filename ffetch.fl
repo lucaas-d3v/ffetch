@@ -1,6 +1,7 @@
 import os;
 import process;
 import str;
+import term;
 
 import "./modules/os.fl" as f_os;
 import "./modules/host.fl" as f_host;
@@ -12,6 +13,27 @@ import "./modules/terminal.fl" as f_term;
 import "./modules/uptime.fl" as f_up;
 import "./modules/utils.fl" as f_ut;
 import "./modules/cpu.fl" as f_cpu;
+import "./modules/packages.fl" as f_pck;
+import "./modules/gpu.fl" as f_gpu;
+import "./modules/desktop.fl" as f_desktop;
+import "./modules/disk.fl" as f_disk;
+import "./modules/display.fl" as f_disp;
+import "./modules/ip.fl" as f_ip;
+
+# fast helpers
+fn version() void {
+    print("ffetch 0.0.3");
+}
+
+fn help() void {
+    print("Usage: ffetch <flags>");
+    print("");
+    
+    print("Flags:");
+    print("  -h, --help:        Show this help log.");
+    print("  -v, --version:     Show ffetch version.");
+    print("  -nl, --no-logo:    Run ffetch witout OS logo.");
+}
 
 # main
 fn main() void { 
@@ -22,11 +44,11 @@ fn main() void {
 
     for arg in args {
         if arg == "-h" or arg == "--help" {
-            print("Help");
+            help();
             process.exit(0);
 
         } else if arg == "-V" or arg == "--version"{
-            print("ffetch 0.0.1");
+            version();
             process.exit(0);
 
         } else if arg == "-nl" or arg == "--no-logo" {
@@ -46,8 +68,11 @@ fn main() void {
 
     # ram
     const data_of_ram: arr<string> = f_ram.get_ram(); 
-    const total_ram = data_of_ram[0] ~> to_int(); 
-    const free_ram = total_ram - (data_of_ram[1] ~> to_int()); 
+    const total_ram = (data_of_ram[0] ~> to_int()) * 1.0; 
+    const free_ram = total_ram - (data_of_ram[1] ~> to_int()) * 1.0; 
+
+    const ram_used = (free_ram * 1.0) / 1024 / 1024;
+    const ram_total = (total_ram * 1.0) / 1024 / 1024;
 
     # shell
     const shell = f_sh.get_shell();
@@ -61,34 +86,93 @@ fn main() void {
     # host
     const host = f_host.get_host_name();
 
-    var specs = str_array();
-    push(specs, host);
-    push(specs, "-------");
-    push(specs, $"OS: {os_full_name}"); 
-    push(specs, $"Kernel: {k_version}"); 
-    push(specs, $"Uptime: {uptime}"); 
-    push(specs, $"Shell: {shell}"); 
-    push(specs, $"Terminal: {term}");
-    push(specs, $"CPU: {cpu_model}"); 
-    push(specs, $"RAM: {free_ram / 1024 / 1024}GB / {total_ram / 1024 / 1024}GB"); 
+    # packages
+    const packages = f_pck.get_packages();
 
+    # gpu
+    const gpu_model = f_gpu.get_gpu();
+    
+    # de
+    const de_name   = f_desktop.get_de();
+
+    # local ip
+    const local_ip = f_ip.get_local_ip();
+    
+    # window manager
+    const wm_name   = f_desktop.get_wm();
+
+    # disk
+    const disk_data = f_disk.get_disk_data();
+    const disk_used = (disk_data[0] ~> to_int()) / 1024;
+    const disk_total = (disk_data[1] ~> to_int()) / 1024;
+
+    # display
+    const display_res = f_disp.get_display();
+
+    var specs = str_array();
+    push(specs, $"{term.BOLD}{host}{term.RESET}");
+    push(specs, $"{term.BOLD}{os_full_name}{term.RESET}");
+    push(specs, $"{"─" ~> str.repeat(len(os_full_name))}");
+    push(specs, ""); 
+
+    push(specs, $"{term.BOLD}{term.CYAN}System{term.RESET}"); 
+    push(specs, $"  {term.BOLD}Kernel{term.RESET}    {k_version}"); 
+    push(specs, $"  {term.BOLD}Uptime{term.RESET}    {uptime}"); 
+    push(specs, $"  {term.BOLD}Packages{term.RESET}  {packages}");
+    push(specs, $"  {term.BOLD}DE{term.RESET}        {de_name}"); 
+    push(specs, $"  {term.BOLD}WM{term.RESET}        {wm_name}");
+
+    push(specs, ""); 
+    push(specs, $"{term.BOLD}{term.GREEN}Hardware{term.RESET}"); 
+    push(specs, $"  {term.BOLD}CPU{term.RESET}       {cpu_model}"); 
+    push(specs, $"  {term.BOLD}RAM{term.RESET}       {f_ut.make_bar(ram_used, ram_total, "GB")}"); 
+    push(specs, $"  {term.BOLD}GPU{term.RESET}       {gpu_model}"); 
+    push(specs, $"  {term.BOLD}Display{term.RESET}   {display_res}");
+    push(specs, $"  {term.BOLD}Disk (/){term.RESET}  {f_ut.make_bar(disk_used, disk_total, "GB")}");
+
+    push(specs, ""); 
+    push(specs, $"{term.BOLD}{term.BLUE}Environment{term.RESET}");     
+    push(specs, $"  {term.BOLD}Shell{term.RESET}     {shell}"); 
+    const index = f_ut.index_of(term, "-");
+    push(specs, $"  {term.BOLD}Terminal{term.RESET}  {term[..index]}");
+    push(specs, $"  {term.BOLD}Local IP{term.RESET}  {local_ip}");
+    
     const logo_str = f_logo.get_logo(os_name_normalized);
-    const logo_lines = logo_str ~> str.split("\n");
+    var logo_lines = logo_str ~> str.split("\n");
+
+    if len(specs) > len(logo_lines) {
+        const diff = len(specs) - len(logo_lines);
+        
+        for index in 0..diff {
+            push(logo_lines, "");
+        }
+    }
 
     const LOGO_WIDTH = 30; 
 
     var i = 0;
     for line in logo_lines {
-        const padded_logo = f_ut.pad_right(line, LOGO_WIDTH);
+        const clean_line = f_ut.clean_tags(line);
+
+        var padding = "";
+        if len(clean_line) < LOGO_WIDTH {
+            padding = " " ~> str.repeat(LOGO_WIDTH - len(clean_line));
+        }
+        
+        const padded_line_with_tags = $"{line}{padding}";
+
+        const colored_logo = f_ut.apply_colors(padded_line_with_tags);
         
         var spec_text = "";
         if i < len(specs) {
             spec_text = specs[i];
         }
         
-        print($"{padded_logo}   {spec_text}");
+        print($"{colored_logo}{term.RESET}   {spec_text}");
         i = i + 1;
     }
+
+    print("");
 }
 
 main();
