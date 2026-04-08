@@ -4,7 +4,7 @@
 
 # ffetch
 
-ffetch is a fast and minimal system information tool for the terminal written in [Flint](https://github.com/lucaas-d3v/flint) branch [sys](https://github.com/lucaas-d3v/flint/tree/sys).
+ffetch is a fast and minimal system information tool for the terminal written in [Flint](https://github.com/lucaas-d3v/flint).
 
 It displays information about your system next to a distro ASCII logo,
 similar to neofetch and fastfetch — but written entirely in Flint.
@@ -30,7 +30,7 @@ similar to neofetch and fastfetch — but written entirely in Flint.
 
 Requeriments:
 
-- [flint](https://github.com/lucaas-d3v/flint/blob/dev/) (dev branch)
+- [flint](https://github.com/lucaas-d3v/flint) (Flint v1.10.0)
 
 ```bash
 git clone https://github.com/lucaas-d3v/ffetch
@@ -83,4 +83,11 @@ ffetch --no-logo
 
 ---
 
->ffetch is not just a fetch tool. It's proof that [flint](https://github.com/lucaas-d3v/flint/blob/dev/) can build real software.
+## Final Considerations
+
+Final experimental release
+Used to test Flint stdlib and runtime performance
+
+This projected si finished on Flint v1.10.0
+
+> ffetch is not just a fetch tool. It's proof that [flint](https://github.com/lucaas-d3v/flint/blob/dev/) can build real software.
