@@ -1,0 +1,19 @@
+                  {CB}-{0}
+                 {CB}.o+{0}
+                {CB}`ooo/{0}
+               {CB}`+oooo:{0}
+              {CB}`+oooooo:{0}
+             {C}-+oooooo+:{0}
+            {C}/: {CD}-:{C}++oooo+:{0}
+           {C}/++++/+++++++:{0}
+          {C}/++++++++++++++:{0}
+         {C}/+++o{W}$2{C}oooooooo{W}$1{C}oooo/`{0}
+        {C}./{W}$2{CD}ooosssso++osssssso{W}$1{C}+`{0}
+{CD}$2       .oossssso-````/ossssss+`{0}
+{CD}      -osssssso.      :ssssssso.{0}
+{CD}     :osssssss/        osssso+++.{0}
+{CD}    /ossssssss/        +ssssooo/-{0}
+{CD}  `/ossssso+/:-        -:/+osssso+-{0}
+{CD} `+sso+:-`                  `.-/+oso:{0}
+{CD}`++:.                           `-/+/{0}
+{CD}.`                                 `/{0}

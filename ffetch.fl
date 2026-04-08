@@ -22,7 +22,7 @@ import "./modules/ip.fl" as f_ip;
 
 # fast helpers
 fn version() void {
-    print("ffetch 0.0.3");
+    print("ffetch 0.3.0");
 }
 
 fn help() void {
@@ -148,7 +148,11 @@ fn main() void {
         }
     }
 
-    const LOGO_WIDTH = 30; 
+    var LOGO_WIDTH = 0; 
+    
+    if show_logo {
+        LOGO_WIDTH = 30; 
+    }
 
     var i = 0;
     for line in logo_lines {
@@ -161,8 +165,11 @@ fn main() void {
         
         const padded_line_with_tags = $"{line}{padding}";
 
-        const colored_logo = f_ut.apply_colors(padded_line_with_tags);
-        
+        var colored_logo = "";
+        if show_logo {
+            colored_logo = f_ut.apply_colors(padded_line_with_tags);
+        }
+
         var spec_text = "";
         if i < len(specs) {
             spec_text = specs[i];

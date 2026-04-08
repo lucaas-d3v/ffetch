@@ -1,0 +1,20 @@
+        {W}.{DB}hddddddddddddddddddddddh{W}.{0}
+      {W}:{B}dddddddddddddddddddddddddd{W}:{0}
+     {W}/{B}dddddddddddddddddddddddddddd{W}/{0}
+    {W}+{B}dddddddddddddddddddddddddddddd{W}+{0}
+   {W}`s{B}ddddddddddddddddddddddddddddddddds{W}`{0}
+  {W}`y{B}dddddddddddd{W}++{B}hdddddddddddddddddddy{W}`{0}
+{W}.h{B}ddddddddddd{W}+`  `+{B}ddddh{DB}:-sdddddddddddh{W}.{0}
+{B}hdddddddddd{W}+`      `+y:    {DB}.sddddddddddh{0}
+{B}ddddddddh{W}+`   {W}`//{W}`   {W}`.`     {DB}-sddddddddd{0}
+{B}ddddddh{W}+`   {W}/hddh/{W}   `{B}:s-{DB}    -sddddddd{0}
+{B}ddddh{W}+`   {W}/+/{B}ddddd{W}h/`   `{B}+s-{DB}    -sddddd{0}
+{B}ddd{W}+`   {W}/o` {B}:ddddddd{W}h/`   `{B}oy-{DB}    .yddd{0}
+{B}hdddyo+ohddyosdddddddddho+oydddy++ohdddh{0}
+{DB}.hddddddddddddddddddddddddddddddddddddh.{0}
+  {DB}`yddddddddddddddddddddddddddddddddddy`{0}
+   {DB}`sddddddddddddddddddddddddddddddddds`{0}
+     {DB}+dddddddddddddddddddddddddddddd+{0}
+      {DB}/dddddddddddddddddddddddddddd/{0}
+       {DB}:dddddddddddddddddddddddddd:{0}
+        {DB}.hddddddddddddddddddddddh.{0}

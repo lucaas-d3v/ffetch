@@ -1,0 +1,20 @@
+                    {W}'{0}
+                   {W}'o'{0}
+                  {CB}'ooo'{0}
+                 {CB}'ooxoo'{0}
+                {CB}'ooxxxoo'{0}
+               {B}'oookkxxoo'{0}
+              {B}'oiioxkkxxoo'{0}
+             {B}':;:iiiioxxxoo'{0}
+               {B}`'.;::ioxxoo'{0}
+          {BD}'-.      `':;jiooo'{0}
+         {BD}'oooio-..     `'i:io'{0}
+        {BD}'ooooxxxxoio:,.   `'-;'{0}
+       {BD}'ooooxxxxxkkxoooIi:-.  `'{0}
+      {BD}'ooooxxxxxkkkkxoiiiiiji'{0}
+     {BD}'ooooxxxxxkxxoiiii:'`     .i'{0}
+    {BD}'ooooxxxxxoi:::'`        .;ioxo'{0}
+   {BD}'ooooxooi::'`          .:iiixkxxo'{0}
+  {BD}'ooooi:'`                 `'';ioxxo'{0}
+ {BD}'i:'`                          '':io'{0}
+{BD}'`                                    `'{0}

@@ -1,0 +1,18 @@
+               {CB}............{0}
+          {CB}.';;;;;.       .,;,.{0}
+       {CB}.,;;;;;;;.       ';;;;;;;.{0}
+     {C}.:::::::::'      .,::;;,''''',{0}
+    {C},'.::::::::    .{CD};;'.          ';{0}
+   {C};'  'cccccc,   {CD},' :: '..         .:{0}
+  {C},,   :ccccc.  {CD};: .c, '' :.       ,;{0}
+{C}.l.      cllll' {CD}., .lc  :; .l'       l.{0}
+{C}.c       :lllc  {CD};cl:  .l' .ll.       :'{0}
+{C}.l        'looc. {CD}.    ,o:  'oo'      c,{0}
+{C}.o.         .:ool::coc'  .ooo'      o.{0}
+  {C}::             .....  .;dddo      ;c{0}
+   {C}l:...             .';lddddo.     ,o{0}
+    {C}lxxxxxdoolllodxxxxxxxxxc      :l{0}
+     {C},dxxxxxxxxxxxxxxxxxxl.      'o,{0}
+       {C},dkkkkkkkkkkkkko;.        .;o;{0}
+         {C}.;okkkkkdl;.        .,cl:.{0}
+            {C}.,:cccccccc:,.{0}

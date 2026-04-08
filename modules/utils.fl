@@ -47,14 +47,14 @@ fn make_bar(used: int, total: int, suffix: string) string {
     const empty = 10 - filled;
 
     const f_str = $"{term.BOLD}{term.GREEN}█{term.RESET}" ~> str.repeat(filled);
-    const e_str = "░" ~> str.repeat(empty);
+    const e_str = "▁" ~> str.repeat(empty);
 
     return $"{f_str}{e_str} {used}{suffix} / {total}{suffix}";
 }
 
 fn clean_tags(s: string) string {
     return s 
-        ~> str.replace("{DR}", "")
+        ~> str.replace("{RD}", "") 
         ~> str.replace("{R}", "")
         ~> str.replace("{W}", "")
         ~> str.replace("{G}", "")
@@ -62,10 +62,36 @@ fn clean_tags(s: string) string {
 }
 
 fn apply_colors(s: string) string {
+    # Definimos os códigos ANSI que faltam no seu term.fl
+    const WHITE = "\x1b[37m";
+    const BOLD_RED = "\x1b[1;31m";
+    const DARK_RED = "\x1b[2;31m";
+    const BOLD_CYAN = "\x1b[1;36m";
+    const DARK_CYAN = "\x1b[2;36m";
+    const DARK_BLUE = "\x1b[2;34m";
+    const BOLD_BLUE = "\x1b[1;34m";
+
     return s 
+        # 1. Tags Complexas (Bold/Dark)
+        ~> str.replace("{RB}", BOLD_RED)
+        ~> str.replace("{RD}", DARK_RED)
+        ~> str.replace("{CB}", BOLD_CYAN)
+        ~> str.replace("{CD}", DARK_CYAN)
+        ~> str.replace("{DB}", DARK_BLUE) # Usado na Alpine
+        ~> str.replace("{BD}", DARK_BLUE) # Usado na Artix
+        
+        # 2. Cores Base do seu term.fl
         ~> str.replace("{R}", term.RED)
-        ~> str.replace("{W}", term.WHITE)
-        ~> str.replace("{DR}", term.DARK_RED)
         ~> str.replace("{G}", term.GREEN)
+        ~> str.replace("{B}", term.BLUE)
+        ~> str.replace("{C}", term.CYAN)
+        ~> str.replace("{W}", WHITE)
+        
+        # 3. Limpeza de placeholders residuais (comum em arquivos do fastfetch)
+        ~> str.replace("$1", "")
+        ~> str.replace("$2", "")
+        
+        # 4. Estilos e Reset
+        ~> str.replace("{BOLD}", term.BOLD)
         ~> str.replace("{0}", term.RESET);
 }
