@@ -22,7 +22,7 @@ import "./modules/ip.fl" as f_ip;
 
 # fast helpers
 fn version() void {
-    print("ffetch 0.3.0");
+    print("ffetch 0.4.0");
 }
 
 fn help() void {
