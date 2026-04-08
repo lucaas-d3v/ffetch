@@ -1,13 +1,13 @@
-import fs;
+import sys;
 import str;
 
 fn get_ram() arr<string> { 
-    const brute = fs.read_file("/proc/meminfo") ~> if_fail("Não foi possível ler /proc/meminfo") ~> to_str() ~> str.trim(); 
-    const brute_lines = brute ~> str.split("\n"); 
-    const line_total = (((brute_lines[0] ~> str.split(":"))[1]) ~> str.trim() ~> str.split(" "))[0]; 
-    const line_free = (((brute_lines[2] ~> str.split(":"))[1]) ~> str.trim() ~> str.split(" "))[0]; 
+    const ram = sys.ram_usage() ~> if_fail("Erro de syscall de memória");
+    
     var r = str_array(); 
-    push(r, line_total); 
-    push(r, line_free); 
+    
+    push(r, ram["total"] ~> to_str()); 
+    push(r, ram["available"] ~> to_str()); 
+    
     return r;
 }

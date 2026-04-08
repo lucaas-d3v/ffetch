@@ -1,21 +1,20 @@
-import process;
+import sys;
 import str;
 
 fn get_gpu() string {
-    const pci_info = process.exec("lspci");
+    const raw_name = sys.gpu_name() ~> to_str();
     
-    for line in pci_info ~> lines() ~> grep("VGA") {
-        const parts = line ~> str.split(": ");
-        if len(parts) > 1 {
-            const raw_name = (parts[1] ~> str.split(" (rev"))[0] ~> str.trim();
-            
-            return raw_name 
-                ~> str.replace(" Corporation", "")
-                ~> str.replace("Advanced Micro Devices, Inc. [AMD/ATI]", "AMD")
-                ~> str.replace(" Processor Family Integrated Graphics Controller", "")
-                ~> str.replace(" Integrated Graphics Controller", "")
-                ~> str.trim();
-        }
-    }
-    return "Unknown GPU";
+    var targets = str_array();
+    push(targets, " Corporation");
+    push(targets, "Advanced Micro Devices, Inc. [AMD/ATI]");
+    push(targets, " Processor Family Integrated Graphics Controller");
+    push(targets, " Integrated Graphics Controller");
+    
+    var repls = str_array();
+    push(repls, "");
+    push(repls, "AMD");
+    push(repls, "");
+    push(repls, "");
+    
+    return str.replace_all(raw_name, targets, repls) ~> str.trim();
 }

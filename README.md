@@ -4,14 +4,14 @@
 
 # ffetch
 
-ffetch is a fast and minimal system information tool for the terminal written in [Flint](https://github.com/lucaas-d3v/flint).
+ffetch is a fast and minimal system information tool for the terminal written in [Flint](https://github.com/lucaas-d3v/flint) branch [sys](https://github.com/lucaas-d3v/flint/tree/sys).
 
 It displays information about your system next to a distro ASCII logo,
 similar to neofetch and fastfetch — but written entirely in Flint.
 
 ## Features
 
-- Extremely fast startup (~0.03s)
+- Extremely fast startup (~0.01s)
 - Clean and minimal UI
 - ASCII distro logos
 - RAM usage bar
@@ -20,11 +20,11 @@ similar to neofetch and fastfetch — but written entirely in Flint.
 
 ## Performance
 
-| Tool | Startup Time |
-|-----|-------------|
-| ffetch | ~0.03s |
-| fastfetch | ~0.08s |
-| neofetch | ~0.40s |
+| Command | Mean [ms] | Min [ms] | Max [ms] | Relative |
+|:---|---:|---:|---:|---:|
+| `ffetch` | 10.6 ± 0.3 | 10.2 | 11.4 | 1.00 |
+| `neofetch` | 278.9 ± 4.5 | 264.2 | 289.6 | 26.33 ± 0.96 |
+| `fastfetch` | 31.5 ± 0.5 | 30.3 | 33.4 | 2.98 ± 0.11 |
 
 ## Installation
 

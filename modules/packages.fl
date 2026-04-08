@@ -1,12 +1,7 @@
-import fs;
-import str;
+import sys;
 
 fn get_packages() string {
-    const dpkg_status = fs.read_file("/var/lib/dpkg/status") 
-        ~> fallback("") 
-        ~> to_str();
-    
-    const count = str.count_matches(dpkg_status, "Status: install ok installed");
+    const count = sys.packages_dpkg() ~> fallback(0) ~> to_int();
     
     if count > 0 {
         return $"{count} (dpkg)";

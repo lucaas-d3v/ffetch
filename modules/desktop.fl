@@ -12,11 +12,16 @@ fn get_de() string {
 }
 
 fn get_wm() string {
-    const r = env.get("XDG_SESSION_DESKTOP");
-
-    if len(r) > 0 {
-        return r;    
+    const wm = env.get("XDG_CURRENT_DESKTOP");
+    
+    if wm == "XFCE" {
+        return "xfwm4";
     }
     
-    return "Unknow";
+    const session = env.get("XDG_SESSION_TYPE");
+    if len(session) > 0 {
+        return session;
+    }
+    
+    return "Unknown";
 }

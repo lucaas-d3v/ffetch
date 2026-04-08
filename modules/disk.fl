@@ -1,16 +1,11 @@
-import process;
-import str;
+import sys;
 
 fn get_disk_data() arr<string> {
-    const cmd = "df -m / | awk 'NR==2 {print $3 \" \" $2}'";
-    const r = process.exec(cmd) ~> str.trim();
-    
-    if len(r) > 0 {
-        return r ~> str.split(" ");
-    }
+    const disk = sys.disk_usage("/") ~> if_fail("Erro de I/O no Kernel");
     
     var fb = str_array();
-    push(fb, "0");
-    push(fb, "0");
+    push(fb, ((disk["used"] ~> to_int()) / 1048576) ~> to_str());
+    push(fb, ((disk["total"] ~> to_int()) / 1048576) ~> to_str());
+    
     return fb;
 }

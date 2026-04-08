@@ -161,9 +161,38 @@ fn main() void {
         LOGO_WIDTH = 30; 
     }
 
+    # color dictionary pre-allocation
+    var color_targets = str_array();
+    var color_repls = str_array();
+    push(color_targets, "{RB}"); push(color_repls, "\x1b[1;31m");
+    push(color_targets, "{RD}"); push(color_repls, "\x1b[2;31m");
+    push(color_targets, "{CB}"); push(color_repls, "\x1b[1;36m");
+    push(color_targets, "{CD}"); push(color_repls, "\x1b[2;36m");
+    push(color_targets, "{DB}"); push(color_repls, "\x1b[2;34m");
+    push(color_targets, "{BD}"); push(color_repls, "\x1b[2;34m");
+    push(color_targets, "{R}");  push(color_repls, term.RED);
+    push(color_targets, "{G}");  push(color_repls, term.GREEN);
+    push(color_targets, "{B}");  push(color_repls, term.BLUE);
+    push(color_targets, "{C}");  push(color_repls, term.CYAN);
+    push(color_targets, "{W}");  push(color_repls, "\x1b[37m");
+    push(color_targets, "$1");   push(color_repls, "");
+    push(color_targets, "$2");   push(color_repls, "");
+    push(color_targets, "{BOLD}"); push(color_repls, term.BOLD);
+    push(color_targets, "{0}");  push(color_repls, term.RESET);
+
+    var clean_targets = str_array();
+    var clean_repls = str_array();
+    push(clean_targets, "{RD}"); push(clean_repls, "");
+    push(clean_targets, "{R}");  push(clean_repls, "");
+    push(clean_targets, "{W}");  push(clean_repls, "");
+    push(clean_targets, "{G}");  push(clean_repls, "");
+    push(clean_targets, "{B}");  push(clean_repls, "");
+    push(clean_targets, "{0}");  push(clean_repls, "");
+
+
     var i = 0;
     for line in logo_lines {
-        const clean_line = f_ut.clean_tags(line);
+        const clean_line = f_ut.clean_tags(line, clean_targets, clean_repls);
 
         var padding = "";
         if len(clean_line) < LOGO_WIDTH {
@@ -174,7 +203,7 @@ fn main() void {
 
         var colored_logo = "";
         if show_logo {
-            colored_logo = f_ut.apply_colors(padded_line_with_tags);
+            colored_logo = f_ut.apply_colors(padded_line_with_tags, color_targets, color_repls);
         }
 
         var spec_text = "";

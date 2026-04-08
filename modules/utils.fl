@@ -25,41 +25,10 @@ fn make_bar(used: int, total: int, suffix: string) string {
     return $"{f_str}{e_str} {used}{suffix} / {total}{suffix}";
 }
 
-fn clean_tags(s: string) string {
-    return s 
-        ~> str.replace("{RD}", "") 
-        ~> str.replace("{R}", "")
-        ~> str.replace("{W}", "")
-        ~> str.replace("{G}", "")
-        ~> str.replace("{0}", "");
+fn clean_tags(s: string, targets: arr<string>, repls: arr<string>) string {
+    return str.replace_all(s, targets, repls);
 }
 
-fn apply_colors(s: string) string {
-    const WHITE = "\x1b[37m";
-    const BOLD_RED = "\x1b[1;31m";
-    const DARK_RED = "\x1b[2;31m";
-    const BOLD_CYAN = "\x1b[1;36m";
-    const DARK_CYAN = "\x1b[2;36m";
-    const DARK_BLUE = "\x1b[2;34m";
-    const BOLD_BLUE = "\x1b[1;34m";
-
-    return s 
-        ~> str.replace("{RB}", BOLD_RED)
-        ~> str.replace("{RD}", DARK_RED)
-        ~> str.replace("{CB}", BOLD_CYAN)
-        ~> str.replace("{CD}", DARK_CYAN)
-        ~> str.replace("{DB}", DARK_BLUE) 
-        ~> str.replace("{BD}", DARK_BLUE) 
-        
-        ~> str.replace("{R}", term.RED)
-        ~> str.replace("{G}", term.GREEN)
-        ~> str.replace("{B}", term.BLUE)
-        ~> str.replace("{C}", term.CYAN)
-        ~> str.replace("{W}", WHITE)
-        
-        ~> str.replace("$1", "")
-        ~> str.replace("$2", "")
-        
-        ~> str.replace("{BOLD}", term.BOLD)
-        ~> str.replace("{0}", term.RESET);
+fn apply_colors(s: string, targets: arr<string>, repls: arr<string>) string {
+    return str.replace_all(s, targets, repls);
 }

@@ -1,3 +1,4 @@
+
 import fs;
 
 fn get_logo(os_name: string) string { 
@@ -6,6 +7,6 @@ fn get_logo(os_name: string) string {
     if len(logo_share) > 0 {
         return logo_share;    
     }
-    
-    return fs.read_file($"assets/{os_name}.txt") ~> to_str();
+
+    return fs.read_file($"./logos/{os_name}.txt") ~> to_str();
 }
