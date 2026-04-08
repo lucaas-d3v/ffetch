@@ -58,7 +58,7 @@ fn main() void {
 
     # os
     const os_full_name = f_os.get_os(); 
-    const os_name_normalized = (os_full_name ~> str.split(" "))[0] ~> f_ut.lower(); 
+    const os_name_normalized = (os_full_name ~> str.split(" "))[0] ~> str.lower(); 
 
     # kernel
     const k_version = f_k.get_kernel_version(); 
@@ -133,8 +133,15 @@ fn main() void {
     push(specs, ""); 
     push(specs, $"{term.BOLD}{term.BLUE}Environment{term.RESET}");     
     push(specs, $"  {term.BOLD}Shell{term.RESET}     {shell}"); 
-    const index = f_ut.index_of(term, "-");
-    push(specs, $"  {term.BOLD}Terminal{term.RESET}  {term[..index]}");
+
+    const index = str.index_of(term, "-");
+
+    if index != -1 {
+        push(specs, $"  {term.BOLD}Terminal{term.RESET}  {term[..index]}");
+    } else {
+        push(specs, $"  {term.BOLD}Terminal{term.RESET}  {term}");    
+    }
+    
     push(specs, $"  {term.BOLD}Local IP{term.RESET}  {local_ip}");
     
     const logo_str = f_logo.get_logo(os_name_normalized);

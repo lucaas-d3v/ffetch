@@ -2,33 +2,6 @@ import str;
 import term;
 
 # utils
-fn lower(s: string) string { 
-    var new_str_temp = str_array(); 
-    const little_ones = { "A": "a", "B": "b", "C": "c", "D": "d", "E": "e", "F": "f", "G": "g", "H": "h", "I": "i", "J": "j", "K": "k", "L": "l", "M": "m", "N": "n", "O": "o", "P": "p", "Q": "q", "R": "r", "S": "s", "T": "t", "U": "u", "V": "v", "W": "w", "X": "x", "Y": "y", "Z": "z" }; 
-    for c in s ~> chars() { 
-        const c_n = to_str(little_ones[c] ~> fallback(c)); 
-        push(new_str_temp, c_n); 
-    } 
-    return new_str_temp ~> str.join("");
-}
-
-fn index_of(s: string, c: string) int {
-    const s_len = len(s);
-    const c_len = len(c);
-
-    if c_len == 0 or c_len > s_len {
-        return -1;
-    }
-
-    for i in range(0, (s_len - c_len + 1)) {
-        if s[i .. i + c_len] == c {
-            return i;
-        }
-    }
-    
-    return -1;
-}
-
 fn pad_right(s: string, width: int) string {
     const current_len = len(s);
     
@@ -62,7 +35,6 @@ fn clean_tags(s: string) string {
 }
 
 fn apply_colors(s: string) string {
-    # Definimos os códigos ANSI que faltam no seu term.fl
     const WHITE = "\x1b[37m";
     const BOLD_RED = "\x1b[1;31m";
     const DARK_RED = "\x1b[2;31m";
@@ -72,26 +44,22 @@ fn apply_colors(s: string) string {
     const BOLD_BLUE = "\x1b[1;34m";
 
     return s 
-        # 1. Tags Complexas (Bold/Dark)
         ~> str.replace("{RB}", BOLD_RED)
         ~> str.replace("{RD}", DARK_RED)
         ~> str.replace("{CB}", BOLD_CYAN)
         ~> str.replace("{CD}", DARK_CYAN)
-        ~> str.replace("{DB}", DARK_BLUE) # Usado na Alpine
-        ~> str.replace("{BD}", DARK_BLUE) # Usado na Artix
+        ~> str.replace("{DB}", DARK_BLUE) 
+        ~> str.replace("{BD}", DARK_BLUE) 
         
-        # 2. Cores Base do seu term.fl
         ~> str.replace("{R}", term.RED)
         ~> str.replace("{G}", term.GREEN)
         ~> str.replace("{B}", term.BLUE)
         ~> str.replace("{C}", term.CYAN)
         ~> str.replace("{W}", WHITE)
         
-        # 3. Limpeza de placeholders residuais (comum em arquivos do fastfetch)
         ~> str.replace("$1", "")
         ~> str.replace("$2", "")
         
-        # 4. Estilos e Reset
         ~> str.replace("{BOLD}", term.BOLD)
         ~> str.replace("{0}", term.RESET);
 }
