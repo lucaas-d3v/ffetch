@@ -2,6 +2,8 @@
 <img src="assets/preview.png" width="700">
 </p>
 
+[![Built with Flint](https://img.shields.io/badge/Built%20with-Flint-orange)](https://github.com/lucaas-d3v/awesome-flint)
+
 # ffetch
 
 ffetch is a fast and minimal system information tool for the terminal written in [Flint](https://github.com/lucaas-d3v/flint).
