@@ -1,8 +1,11 @@
-<p align="center">
+<div align="center">
 <img src="assets/preview.png" width="700">
-</p>
+
+</br>
 
 [![Built with Flint](https://img.shields.io/badge/Built%20with-Flint-orange)](https://github.com/lucaas-d3v/awesome-flint)
+
+</div>
 
 # ffetch
 
